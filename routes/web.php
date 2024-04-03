@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\TutoratsController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',
+[TutoratsController::class, 'index'])->name('tutorats.index');
