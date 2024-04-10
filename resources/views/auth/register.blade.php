@@ -66,7 +66,7 @@
                             </div>
 
                             <div class="form-floating mb-3">
-                                <select multiple name="matieres" id="matieres" class="form-select @error('matieres') is-invalid @enderror">
+                                <select multiple name="matieres[]" id="matieres" class="form-select @error('matieres') is-invalid @enderror">
 
                                 </select>
                                 <label for="nom">Matieres</label>
@@ -115,6 +115,7 @@
                     },
                     dataType : 'json',
                     success: function(response) {
+                        $('#matieres option').remove();
                         $.each(response, function(index, element) {
 
                             var newOption = $('<option>', {
