@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('titre', 'Creer un compte')
+@section('titre', 'Créer un compte')
 
 @section('contenu')
 
@@ -16,8 +16,9 @@
                 </div>
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-8 col-xl-6">
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN" method="post" action="{{ route('register') }}">
-                            @csrf
+                    <form id="contactForm" data-sb-form-api-token="API_TOKEN" method="post" action="{{ route('register') }}">
+                    @csrf
+
 
                             <div class="form-floating mb-3">
                                 <input class="form-control  @error('nom') is-invalid @enderror" id="nom" type="text"
@@ -83,25 +84,14 @@
                                 @enderror
                             </div>
 
-                            <div class="d-none" id="submitSuccessMessage">
-                                <div class="text-center mb-3">
-                                    <div class="fw-bolder">Form submission successful!</div>
-                                    To activate this form, sign up at
-                                    <br/>
-                                    <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                                </div>
-                            </div>
 
-                            <div class="d-none" id="submitErrorMessage">
-                                <div class="text-center text-danger mb-3">Error sending message!</div>
-                            </div>
-                            <!-- Submit Button-->
                             <div class="d-grid">
                                 <button class="btn btn-primary btn-lg" id="submitButton" type="submit">
                                     Enregistrer
                                 </button>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
