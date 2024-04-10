@@ -20,45 +20,67 @@
                             @csrf
 
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="nom" type="text"
-                                       data-sb-validations="required,text"/>
+                                <input class="form-control  @error('nom') is-invalid @enderror" id="nom" type="text"
+                                       data-sb-validations="required,text" name="nom">
                                 <label for="nom">Nom</label>
+                                @error('nom')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="prenom" type="text"
-                                       data-sb-validations="required,text"/>
+                                <input class="form-control @error('prenom') is-invalid @enderror" id="prenom" type="text"
+                                       data-sb-validations="required,text" name="prenom"/>
                                 <label for="prenom">Prenom</label>
+                                @error('prenom')
+                                <div class="invalid-feedback" >{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="email" type="email" placeholder="name@example.com"
-                                       data-sb-validations="required,email"/>
+                                <input class="form-control @error('email') is-invalid @enderror" id="email" type="email" placeholder="name@example.com"
+                                       data-sb-validations="required,email" name="email"/>
                                 <label for="email">Adresse email</label>
-                                <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.
-                                </div>
-                                <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                                @error('email')
+                                <div class="invalid-feedback" data-sb-feedback="email:email">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="telephone" type="text"
-                                       data-sb-validations="required,text"/>
-                                <label for="nom">Telephone</label>
+                                <input class="form-control @error('telephone') is-invalid @enderror" id="telephone" type="text"
+                                       data-sb-validations="required,text" name="telephone"/>
+                                <label for="telephone">Telephone</label>
+                                @error('telephone')
+                                <div class="invalid-feedback" data-sb-feedback="email:email">{{ $message }}</div>
+                                @enderror
                             </div>
+
                             <div class="form-floating mb-3">
                                 <select name="domaine" id="domaine" class="form-select">
-                                    <option value="domaine1">domaine1</option>
+                                    @foreach($domaines as $domaine)
+                                        <option value="{{ $domaine->id }}">{{ $domaine->libelle }}</option>
+                                    @endforeach
                                 </select>
                                 <label for="nom">Domaine d'études</label>
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="password" type="password"
-                                       data-sb-validations="required"/>
-                                <label for="email">Mot de passe</label>
-                                <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.
-                                </div>
-                                <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                                <select multiple name="matieres" id="matieres" class="form-select @error('matieres') is-invalid @enderror">
+
+                                </select>
+                                <label for="nom">Matieres</label>
+                                @error('password')
+                                <div class="invalid-feedback" data-sb-feedback="email:email">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input class="form-control @error('password') is-invalid @enderror" id="password" type="password"
+                                       data-sb-validations="required" name="password"/>
+                                <label for="password">Mot de passe</label>
+                                @error('password')
+                                <div class="invalid-feedback" data-sb-feedback="email:email">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="d-none" id="submitSuccessMessage">
@@ -75,8 +97,8 @@
                             </div>
                             <!-- Submit Button-->
                             <div class="d-grid">
-                                <button class="btn btn-primary btn-lg" id="submitButton" type="submit">Se
-                                    connecter
+                                <button class="btn btn-primary btn-lg" id="submitButton" type="submit">
+                                    Enregistrer
                                 </button>
                             </div>
                         </form>
@@ -89,3 +111,35 @@
 
 @endsection
 
+@section('scripts')
+    <script>
+        $(function () {
+
+            $('#domaine').change(function () {
+
+                $.ajax({
+                    url: '{{ route('getMatieres') }}',
+                    type: 'GET',
+                    data: {
+                        'domaine_id': $('#domaine').val(),
+                    },
+                    dataType : 'json',
+                    success: function(response) {
+                        $.each(response, function(index, element) {
+
+                            var newOption = $('<option>', {
+                                value: element['id'],
+                                text: element['libelle']
+                            });
+                            $('#matieres').append(newOption);
+                        });
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            });
+
+        });
+    </script>
+@endsection

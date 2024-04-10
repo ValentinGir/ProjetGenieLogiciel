@@ -14,11 +14,21 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string("surname");
+            $table->text("telephone");
             $table->string('email')->unique();
+            $table->foreignId('domaine_id')->constrained();
+            $table->foreignId('role_id')->constrained();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+        });
+
+        Schema::create('users_matieres',function (Blueprint $table){
+            $table->id();
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('matiere_id')->constrained();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

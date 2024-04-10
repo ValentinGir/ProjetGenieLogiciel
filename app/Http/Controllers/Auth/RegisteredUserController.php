@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Domaine;
+use App\Models\Matiere;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -19,7 +21,9 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $domaines= Domaine::all();
+        $matieres = Matiere::all();
+        return view('auth.register',compact('domaines','matieres'));
     }
 
     /**
@@ -29,22 +33,41 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'nom' => ['required', 'string', 'max:255'],
+            'prenom' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'telephone' =>['required','string','min:10','max:10'],
+            'matieres'=>['required'],
+            'password' => ['required', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
 
-        event(new Registered($user));
 
-        Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        /* $user = User::create([
+             'name' => $request->name,
+             'email' => $request->email,
+             'password' => Hash::make($request->password),
+         ]);
+
+*/
+         $user = new User();
+         $user->name= $request->nom;
+        $user->surname= $request->prenom;
+         $user->email = $request->email;
+         $user->password = Hash::make($request->password);
+         $user->domaine_id = $request->domaine;
+        $user->telephone = $request->telephone;
+        $user->role_id = 1;
+         $user->save();
+
+         //event(new Registered($user));
+
+         Auth::login($user);
+
+         return redirect()->back();
+
     }
 }

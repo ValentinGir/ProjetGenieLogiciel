@@ -44,4 +44,16 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function domaine(){
+        return $this->belongsTo(Domaine::class);
+    }
+
+    public function matieres(){
+        return $this->belongsToMany(Matiere::class);
+    }
+
+    public function role(){
+        return $this->belongsTo(Role::class);
+    }
 }

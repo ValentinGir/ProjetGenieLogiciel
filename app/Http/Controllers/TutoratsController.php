@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Matiere;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -61,5 +63,11 @@ class TutoratsController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function getMatieres(Request $request){
+        if ($request->ajax()){
+            return response()->json(Matiere::where('domaine_id',$request->input('domaine_id'))->get());
+        }
     }
 }
