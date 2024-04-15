@@ -9,7 +9,7 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 @auth
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('disponibilites.index') }}">Mes disponibilités</a>
+                        <a class="nav-link" href="{{ route('disponibilites.edit') }}">Mes disponibilités</a>
                     </li>
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="post">

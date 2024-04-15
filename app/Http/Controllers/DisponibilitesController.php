@@ -14,7 +14,7 @@ class DisponibilitesController extends Controller
                               ->orderBy('heure_debut')
                               ->get();
         
-        return view('disponibilites.index', ['disponibilites' => $disponibilites]);
+        return view('disponibilites.edit', ['disponibilites' => $disponibilites]);
     }
 
     public function edit()
@@ -54,6 +54,6 @@ class DisponibilitesController extends Controller
             'heure_fin' => $request->heure_fin,
         ]);
     
-        return redirect()->route('disponibilites.index')->with('success', 'Disponibilité ajoutée avec succès.');
+        return redirect()->route('disponibilites.edit')->with('success', 'Disponibilité ajoutée avec succès.');
     }
 }
