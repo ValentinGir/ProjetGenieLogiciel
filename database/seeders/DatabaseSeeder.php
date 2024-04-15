@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             DomaineSeeder::class,
             MatiereSeeder::class,
+            UsersSeeder::class,
+            DisponibilitesSeeder::class,
         ]);
     }
 }
