@@ -27,7 +27,7 @@ class MatiereSeeder extends Seeder
                 ], [
                 'libelle' => 'matiere3',
                 'domaine_id' => 3
-            ],
+                ],
                 [
                     'libelle' => 'matiere4',
                     'domaine_id' => 4

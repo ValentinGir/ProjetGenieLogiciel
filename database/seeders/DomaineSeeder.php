@@ -15,9 +15,9 @@ class DomaineSeeder extends Seeder
     public function run(): void
     {
         DB::table('domaines')->insert(
-           [ [
+           [[
                'libelle' => 'domaine1'
-           ],
+                ],
                [
                    'libelle' => 'domaine2'
                ],

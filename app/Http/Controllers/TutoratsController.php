@@ -70,4 +70,7 @@ class TutoratsController extends Controller
             return response()->json(Matiere::where('domaine_id',$request->input('domaine_id'))->get());
         }
     }
+
+
+
 }
