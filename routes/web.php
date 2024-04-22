@@ -27,8 +27,12 @@ Route::middleware('auth')->group(function () {
 
 
 // routes admin
-Route::middleware('isAdmin')->group(function (){
-    Route::get('dashboard', [AdminController::class,'index'])->name('admin.dashboard');
+Route::middleware(['auth','isAdmin'])->prefix('admin')->group(function (){
+    Route::get('/', [AdminController::class,'index'])->name('admin.users');
+    Route::get('/domaines', [AdminController::class,'domaines'])->name('admin.domaines');
+    Route::post('/domaines/add', [AdminController::class,'storeDomaine'])->name('admin.domaines.store');
+    Route::delete('/domaines/', [AdminController::class,'destroyDomaine'])->name('admin.domaines.destroy');
+    Route::get('/domaines/matieres/', [AdminController::class,'getMatieresDomaine'])->name('admin.domaines.matieres');
 });
 
 // fin route admin

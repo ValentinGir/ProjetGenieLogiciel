@@ -8,9 +8,11 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 @auth
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('disponibilites.edit') }}">Mes disponibilités</a>
-                    </li>
+                   @if(Auth::user()->role->libelle!=="admin")
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('disponibilites.edit') }}">Mes disponibilités</a>
+                        </li>
+                   @endif
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="post">
                             @csrf

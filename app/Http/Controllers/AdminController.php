@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Domaine;
+use App\Models\Matiere;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -12,7 +15,40 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $users = User::all();
+        return view('admin.users', ['users' => $users]);
+    }
+
+    public function domaines()
+    {
+        $domaines = Domaine::all();
+        return view('admin.domaine', ['domaines' => $domaines]);
+    }
+
+    public function storeDomaine(Request $request)
+    {
+        $request->validate([
+            'domaine' => ['required']
+        ]);
+
+        $domaine = new Domaine();
+        $domaine->libelle = $request->domaine;
+        $domaine->save();
+
+        return redirect()->back()->with(['storeDomaineSucces' => 'domaine ajouté !!!']);
+    }
+
+    public function destroyDomaine(Request $request)
+    {
+        if ($request->ajax()) {
+            $matiere = Matiere::where('domaine_id', $request->input('id'))->get()->count();
+            if ($matiere>0)
+                return response()->json($matiere);
+            else{
+                Domaine::where('id',$request->input('id'))->delete();
+                return 0;
+            }
+        }
     }
 
     /**
@@ -55,11 +91,4 @@ class AdminController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

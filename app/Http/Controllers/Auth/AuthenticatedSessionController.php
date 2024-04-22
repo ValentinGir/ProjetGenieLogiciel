@@ -30,7 +30,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         if (Auth::user()->role->libelle=='admin')
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.users');
         else
             return redirect()->intended(route('tutorat.index'));
     }

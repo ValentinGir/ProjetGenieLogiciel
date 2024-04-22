@@ -66,6 +66,5 @@ class RegisteredUserController extends Controller
 
          return redirect()->route('tutorat.index')->with('register','compte créé');
 
-
     }
 }
