@@ -51,6 +51,12 @@ class AdminController extends Controller
         }
     }
 
+    public function getMatieresDomaine(Request $request){
+        if ($request->ajax()){
+            $matieres = response()->json(Matiere::where('domaine_id', $request->input('id'))->get());
+            return response()->json($matieres);
+        }
+    }
     /**
      * Show the form for creating a new resource.
      */

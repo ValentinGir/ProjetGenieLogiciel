@@ -49,8 +49,8 @@
                                         class="btn btn-danger btnDomaineMatieres">supprimer
                                 </button>
                                 <buton class="btn btn-secondary">modifier</buton>
-                                <button id="{{ $domaine->id }}" data-bs-toggle="modal" data-bs-target="#afficheMatieres"
-                                        class="btn btn-primary">matieres
+                                <button id="{{ $domaine->id }}" data-bs-target="#afficheMatieres"
+                                        class="btn btn-primary btnAfficherMatieres">matieres
                                 </button>
                             </td>
 
@@ -88,6 +88,33 @@
 @section('scripts')
     <script>
         $(function () {
+
+            $('.btnAfficherMatieres').on('click', function (e) {
+                e.preventDefault();
+                let idButton = $(this).attr('id');
+
+                let url = '{{ route('admin.domaines.matieres') }}';
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    data: {
+                        'id': idButton
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.original.length > 0) {
+                            $(this).attr('data-bs-toggle', 'modal');
+                        } else {
+
+                        }
+                    },
+                    error: function (xhr) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+
+
             $(".btnDomaineMatieres").on("click", function (e) {
                 e.preventDefault();
                 let idButton = $(this).attr('id');
@@ -95,17 +122,16 @@
                 $.ajax({
                     url: url,
                     type: 'DELETE',
-                    data:{
-                        'id':idButton,
-                        '_token':'{{ csrf_token() }}'
+                    data: {
+                        'id': idButton,
+                        '_token': '{{ csrf_token() }}'
                     },
                     dataType: 'json',
                     success: function (response) {
-                        if(response===0) {
+                        if (response === 0) {
                             swal("Suppression", "suppression réussie!", "success");
                             location.reload();
-                        }
-                        else{
+                        } else {
                             swal("Suppression", "impossible de supprimer", "error");
                         }
                     },
@@ -113,7 +139,6 @@
                         console.log(xhr.responseText);
                     }
                 });
-
             });
         });
     </script>
