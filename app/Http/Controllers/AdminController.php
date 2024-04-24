@@ -38,25 +38,47 @@ class AdminController extends Controller
         return redirect()->back()->with(['storeDomaineSucces' => 'domaine ajouté !!!']);
     }
 
+
     public function destroyDomaine(Request $request)
     {
         if ($request->ajax()) {
             $matiere = Matiere::where('domaine_id', $request->input('id'))->get()->count();
-            if ($matiere>0)
+            if ($matiere > 0)
                 return response()->json($matiere);
-            else{
-                Domaine::where('id',$request->input('id'))->delete();
+            else {
+                Domaine::where('id', $request->input('id'))->delete();
                 return 0;
             }
         }
     }
 
-    public function getMatieresDomaine(Request $request){
-        if ($request->ajax()){
+    public function storeMatiere(Request $request)
+    {
+        $request->validate([
+            'matiere' => ['required']
+        ]);
+
+        $matiere = new Matiere();
+        $matiere->libelle = $request->input('matiere');
+        $matiere->domaine_id = $request->input('id_domaine');
+        $matiere->save();
+        return redirect()->back()->with(['storeMatiereSucces'=>'matiere ajoutée!!!!!']);
+    }
+
+    public function getMatieresDomaine(Request $request)
+    {
+        if ($request->ajax()) {
             $matieres = response()->json(Matiere::where('domaine_id', $request->input('id'))->get());
             return response()->json($matieres);
         }
     }
+
+    public function destroyMatiere(string $id)
+    {
+        Matiere::where('id',$id)->delete();
+        return redirect()->back()->with(['deleteMatiereSucces'=>'matiere supprimé!!!']);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

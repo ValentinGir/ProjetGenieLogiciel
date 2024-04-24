@@ -9,6 +9,17 @@
                         {{Session::get('storeDomaineSucces')}}
                     </div>
                 @endif
+                @if(Session::has('deleteMatiereSucces'))
+                    <div class="alert alert-success">
+                        {{Session::get('deleteMatiereSucces')}}
+                    </div>
+                @endif
+                @if(Session::has('storeMatiereSucces'))
+                    <div class="alert alert-success">
+                        {{Session::get('storeMatiereSucces')}}
+                    </div>
+                @endif
+
                 <form id="contactForm" method="post" class="mb-5" action="{{ route('admin.domaines.store') }}">
                     @csrf
 
@@ -49,7 +60,7 @@
                                         class="btn btn-danger btnDomaineMatieres">supprimer
                                 </button>
                                 <buton class="btn btn-secondary">modifier</buton>
-                                <button id="{{ $domaine->id }}" data-bs-target="#afficheMatieres"
+                                <button id="{{ $domaine->id }}" data-bs-toggle="modal" data-bs-target="#afficheMatieres"
                                         class="btn btn-primary btnAfficherMatieres">matieres
                                 </button>
                             </td>
@@ -74,8 +85,44 @@
                     <h5 class="modal-title" id="exampleModalLabel">Matières</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+
                 <div class="modal-body">
 
+                    <form id="contactForm" method="post" class="mb-5" action="{{ route('admin.matieres.store') }}">
+                        @csrf
+
+                        <div class="form-floating mb-3">
+                            <input class="form-control @error('matiere') is-invalid @enderror" id="matiere" type="text"
+                                   data-sb-validations="required" name="matiere" required/>
+                            <label for="email">Nom </label>
+
+                            @error('matiere')
+                            <div class="invalid-feedback" data-sb-feedback="email:email">{{ $message }}</div>
+                            @enderror
+                            <input type="hidden" id="idDomaine" name="id_domaine">
+                        </div>
+
+                        <div class="d-grid">
+                            <button class="btn btn-primary btn-sm" id="submitButton" type="submit">
+                                Ajouter
+                            </button>
+                        </div>
+
+                    </form>
+
+
+                    <table class="table table-responsive table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -89,9 +136,49 @@
     <script>
         $(function () {
 
+            function ajouterNouvelleLigneATableMatieres(valeur, id, table) {
+                // Crée une nouvelle ligne avec deux cellules
+                var nouvelleLigne = $('<tr>');
+                var cellule1 = $('<th>').text("#");
+                cellule1.attr('scope', 'row');
+                var cellule2 = $('<td>').text(valeur);
+                var cellule3 = $('<td>');
+
+                var formulaire = $('<form>');
+                formulaire.attr('action', "{{ route('admin.matieres.destroy','id') }}".replace('id', id));
+                formulaire.attr('method', 'post');
+
+                // Ajouter le jeton CSRF
+                var csrfInput = $('<input>');
+                csrfInput.attr('type', 'hidden');
+                csrfInput.attr('name', '_token');
+                csrfInput.val('{{ csrf_token() }}');
+                formulaire.append(csrfInput);
+                formulaire.append('<input type="hidden" name="_method" value="DELETE">');
+
+                // Créer le bouton de soumission
+                var boutonSupprimer = $('<button>');
+                boutonSupprimer.attr('type', 'submit');
+                boutonSupprimer.addClass('btn btn-danger');
+                boutonSupprimer.text('supprimer');
+
+                // Ajouter le bouton au formulaire
+                formulaire.append(boutonSupprimer);
+
+                cellule3.append(formulaire);
+
+                // Ajoute les cellules à la ligne
+                nouvelleLigne.append(cellule1, cellule2, cellule3);
+
+                // Ajoute la ligne à la tbody de la table
+                table.append(nouvelleLigne);
+            }
+
             $('.btnAfficherMatieres').on('click', function (e) {
                 e.preventDefault();
+
                 let idButton = $(this).attr('id');
+                $('#idDomaine').val(idButton);
 
                 let url = '{{ route('admin.domaines.matieres') }}';
                 $.ajax({
@@ -103,7 +190,11 @@
                     dataType: 'json',
                     success: function (response) {
                         if (response.original.length > 0) {
-                            $(this).attr('data-bs-toggle', 'modal');
+                            $("#afficheMatieres table tbody").empty();
+                            let tableMatieres = $("#afficheMatieres table tbody");
+                            $.each(response.original, function (index, value) {
+                                ajouterNouvelleLigneATableMatieres(value.libelle, value.id, tableMatieres);
+                            });
                         } else {
 
                         }

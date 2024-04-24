@@ -12,12 +12,13 @@ Route::get('/',[TutoratsController::class,"index"])->name("tutorat.index");
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard')
 */
+
+Route::get('/get-matieres',[TutoratsController::class,'getMatieres'])->name('getMatieres');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/get-matieres',[TutoratsController::class,'getMatieres'])->name('getMatieres');
     Route::get('/disponibilites/edit', [DisponibilitesController::class, 'edit'])->name('disponibilites.edit');
     Route::delete('/disponibilites/{disponibilite}', [DisponibilitesController::class, 'destroy'])->name('disponibilites.destroy');
     Route::get('/disponibilites/create', [DisponibilitesController::class, 'create'])->name('disponibilites.create');
@@ -33,6 +34,9 @@ Route::middleware(['auth','isAdmin'])->prefix('admin')->group(function (){
     Route::post('/domaines/add', [AdminController::class,'storeDomaine'])->name('admin.domaines.store');
     Route::delete('/domaines/', [AdminController::class,'destroyDomaine'])->name('admin.domaines.destroy');
     Route::get('/domaines/matieres/', [AdminController::class,'getMatieresDomaine'])->name('admin.domaines.matieres');
+
+    Route::post('/matieres/add', [AdminController::class,'storeMatiere'])->name('admin.matieres.store');
+    Route::delete('/domaines/{id}', [AdminController::class,'destroyMatiere'])->name('admin.matieres.destroy');
 });
 
 // fin route admin
