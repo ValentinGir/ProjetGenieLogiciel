@@ -12,6 +12,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('disponibilites.edit') }}">Mes disponibilités</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('demandes.show') }}">Demandes</a>
+                        </li>
                    @endif
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="post">
