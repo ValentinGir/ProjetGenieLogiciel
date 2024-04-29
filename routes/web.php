@@ -13,18 +13,27 @@ Route::get('/',[TutoratsController::class,"index"])->name("tutorat.index");
 })->middleware(['auth', 'verified'])->name('dashboard')
 */
 
-Route::get('/get-matieres',[TutoratsController::class,'getMatieres'])->name('getMatieres');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
+// routes utilisateur
+Route::get('/get-tuteurs/{matiere_id}', [TutoratsController::class, 'getTuteurs'])->name('get-tuteurs');
+Route::get('/contact-tuteur/{matiere_id}/{tuteur_id}', [TutoratsController::class, 'contactTuteur'])->name('contact-tuteur');
+Route::get('/contact-tuteur/{matiere_id}/{tuteur_id}', [TutoratsController::class, 'showContactForm'])->name('contact-tuteur.show');
+Route::post('/contact-tuteur/{matiere_id}/{tuteur_id}/send', [TutoratsController::class, 'storeDemande'])->name('contact-tuteur.send');
+
+// routes tuteur
+Route::middleware(['auth', 'isTuteur'])->group(function () {
+    Route::get('/get-matieres',[TutoratsController::class,'getMatieres'])->name('getMatieres');
     Route::get('/disponibilites/edit', [DisponibilitesController::class, 'edit'])->name('disponibilites.edit');
     Route::delete('/disponibilites/{disponibilite}', [DisponibilitesController::class, 'destroy'])->name('disponibilites.destroy');
     Route::get('/disponibilites/create', [DisponibilitesController::class, 'create'])->name('disponibilites.create');
     Route::post('/disponibilites', [DisponibilitesController::class, 'store'])->name('disponibilites.store');
-
 });
+
 
 
 // routes admin

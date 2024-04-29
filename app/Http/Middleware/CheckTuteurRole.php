@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use SebastianBergmann\Template\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckRole
+class CheckTuteurRole
 {
     /**
      * Handle an incoming request.
@@ -19,11 +19,11 @@ class CheckRole
         try{
             $user = auth()->user();
 
-            if($user && $user->role->libelle!=='admin'){
-               abort(403);
+            if ($user && ($user->role->libelle === 'tuteur' || $user->role->libelle === 'admin')) {
+                return $next($request);
             }
-            return $next($request);
-
+    
+            abort(403, 'Accès refusé');
 
         }catch (Exception $e){
             return \response()->json(['message'=>'acces refuse'],403);

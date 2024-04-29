@@ -49,8 +49,9 @@ class User extends Authenticatable
         return $this->belongsTo(Domaine::class);
     }
 
-    public function matieres(){
-        return $this->belongsToMany(Matiere::class);
+    public function matieres()
+    {
+        return $this->belongsToMany(Matiere::class, 'users_matieres');
     }
 
     public function role(){

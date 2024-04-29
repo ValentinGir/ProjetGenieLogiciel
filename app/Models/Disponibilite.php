@@ -13,4 +13,10 @@ class Disponibilite extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function matiere()
+    {
+        return $this->belongsTo(Matiere::class);
+    }
+
 }

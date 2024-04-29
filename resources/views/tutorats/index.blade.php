@@ -10,43 +10,81 @@
                 {{Session::get('register')}}
             </div>
         @endif
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <div class="container px-5 my-5">
             <div class="row gx-5">
-                <div class="col-lg-12">
-                    <div class="row gx-5 row-cols-1 row-cols-md-2">
-                        <div class="col mb-5 h-100">
-                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i
-                                    class="bi bi-collection"></i></div>
-                            <h2 class="h5">Featured title</h2>
-                            <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a
-                                bit more text.</p>
-                        </div>
-                        <div class="col mb-5 h-100">
-                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i
-                                    class="bi bi-building"></i></div>
-                            <h2 class="h5">Featured title</h2>
-                            <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a
-                                bit more text.</p>
-                        </div>
-                        <div class="col mb-5 mb-md-0 h-100">
-                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i
-                                    class="bi bi-toggles2"></i></div>
-                            <h2 class="h5">Featured title</h2>
-                            <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a
-                                bit more text.</p>
-                        </div>
-                        <div class="col h-100">
-                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i
-                                    class="bi bi-toggles2"></i></div>
-                            <h2 class="h5">Featured title</h2>
-                            <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a
-                                bit more text.</p>
-                        </div>
-                    </div>
+                <div class="col-lg-6">
+                    <h2>Sélectionnez une matière</h2>
+                    <form id="matiereForm">
+                        @csrf
+                        <label for="matiere_id">Choisissez une matière :</label>
+                        <select class="form-control" name="matiere_id" id="matiere_id">
+                            <option disabled selected>Choisir une matière</option>
+                            @foreach($matieres as $matiere)
+                                <option value="{{ $matiere->id }}">{{ $matiere->libelle }}</option>
+                            @endforeach
+                        </select>
+                    </form>
+                </div>
+                <div class="col-lg-6">
+                    <h2>Tuteurs correspondants</h2>
+                    <ul id="tuteursList"></ul>
                 </div>
             </div>
         </div>
+
+
     </section>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const matiereSelect = document.getElementById('matiere_id');
+        const tuteursList = document.getElementById('tuteursList');
+
+        matiereSelect.addEventListener('change', function() {
+            const selectedMatiereId = this.value;
+
+            fetch(`/get-tuteurs/${selectedMatiereId}`)
+                .then(response => response.json())
+                .then(data => {
+                    tuteursList.innerHTML = ''; 
+                    data.forEach(tuteur => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `${tuteur.name}`;
+
+                        // Création d'une liste pour afficher les disponibilités
+                        const disponibilitesList = document.createElement('ul');
+                        tuteur.disponibilites.forEach(disponibilite => {
+                            const disponibiliteItem = document.createElement('li');
+                            disponibiliteItem.textContent = `${disponibilite.jour_semaine}: ${disponibilite.heure_debut} - ${disponibilite.heure_fin}`;
+                            disponibilitesList.appendChild(disponibiliteItem);
+                        });
+                        listItem.appendChild(disponibilitesList);
+
+                        // Création du bouton "Contacter"
+                        const contactButton = document.createElement('button');
+                        contactButton.textContent = 'Contacter';
+                        contactButton.addEventListener('click', function() {
+                            window.location.href = `/contact-tuteur/${selectedMatiereId}/${tuteur.id}`;
+                        });
+                        listItem.appendChild(contactButton);
+
+                        // Ajout du tuteur à la liste des tuteurs
+                        tuteursList.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error('Erreur lors de la récupération des tuteurs :', error));
+                });
+            });
+        </script>
+
+
+
     <!-- Testimonial section-->
     <div class="py-5 bg-light">
         <div class="container px-5 my-5">
@@ -179,4 +217,5 @@
             </aside>
         </div>
     </section>
+
 @endsection
