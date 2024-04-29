@@ -44,7 +44,8 @@
             <li><a href="#">Accueil</a></li>
             <li><a href="{{ route('admin.users') }}">Utiliseurs</a></li>
             <li><a href="{{ route('admin.domaines') }}">Domaines</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="{{ route('admin.demandes') }}">Matchs</a></li>
+            <li><a href="{{ route('admin.etudiants') }}">Etudiants</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
     </div>

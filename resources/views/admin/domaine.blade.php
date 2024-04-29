@@ -56,13 +56,11 @@
                             <td>{{ $domaine->libelle }}</td>
 
                             <td>
-                                <button id="{{ $domaine->id }}"
-                                        class="btn btn-danger btnDomaineMatieres">supprimer
-                                </button>
+
+                                <i  id="{{ $domaine->id }}" class="fs-5 bi bi-trash text-danger btnDomaineMatieres"></i>
                                 <buton class="btn btn-secondary">modifier</buton>
-                                <button id="{{ $domaine->id }}" data-bs-toggle="modal" data-bs-target="#afficheMatieres"
-                                        class="btn btn-primary btnAfficherMatieres">matieres
-                                </button>
+
+                                <i id="{{ $domaine->id }}" data-bs-toggle="modal" data-bs-target="#afficheMatieres" class="fs-5 bi bi-eye-fill text-primary btnAfficherMatieres"></i>
                             </td>
 
                         </tr>

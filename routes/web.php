@@ -37,6 +37,10 @@ Route::middleware(['auth','isAdmin'])->prefix('admin')->group(function (){
 
     Route::post('/matieres/add', [AdminController::class,'storeMatiere'])->name('admin.matieres.store');
     Route::delete('/domaines/{id}', [AdminController::class,'destroyMatiere'])->name('admin.matieres.destroy');
+
+    Route::get('/demandes', [AdminController::class,'demandes'])->name('admin.demandes');
+
+    Route::get('/etudiants', [AdminController::class,'etudiants'])->name('admin.etudiants');
 });
 
 // fin route admin

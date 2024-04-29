@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Demande;
 use App\Models\Domaine;
 use App\Models\Matiere;
 use App\Models\User;
@@ -17,6 +18,11 @@ class AdminController extends Controller
     {
         $users = User::all();
         return view('admin.users', ['users' => $users]);
+    }
+
+    public function demandes(){
+        $demandes =Demande::paginate(7);
+        return view('admin.demandes',['demandes'=>$demandes]);
     }
 
     public function domaines()
@@ -79,28 +85,21 @@ class AdminController extends Controller
         return redirect()->back()->with(['deleteMatiereSucces'=>'matiere supprimé!!!']);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+
+    public function etudiants()
     {
-        //
+        $etudiants = Demande::all();
+        return view('admin.etudiants', ['etudiants' => $etudiants]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function showEtudiant(string $email)
     {
-        //
+        $etudiant = Demande::where('email',$email)->get();
+        return view('admin.zoomEtudiant',['etudiant'=>$etudiant]);
     }
 
     /**
