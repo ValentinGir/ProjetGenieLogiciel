@@ -33,6 +33,24 @@ class DisponibilitesSeeder extends Seeder
             'jour_semaine' => 'mercredi',
             'heure_debut' => '10:00:00',
             'heure_fin' => '14:00:00',
+            ],
+            [
+                'user_id' => 3,
+                'jour_semaine' => 'lundi',
+                'heure_debut' => '10:00:00',
+                'heure_fin' => '12:00:00',
+            ],
+            [
+                'user_id' => 3,
+                'jour_semaine' => 'mardi',
+                'heure_debut' => '14:00:00',
+                'heure_fin' => '17:00:00',
+            ],
+            [
+                'user_id' => 3,
+                'jour_semaine' => 'mercredi',
+                'heure_debut' => '13:00:00',
+                'heure_fin' => '15:00:00',
             ]]
         );
     }
