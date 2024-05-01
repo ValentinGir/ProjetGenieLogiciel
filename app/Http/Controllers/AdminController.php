@@ -96,10 +96,11 @@ class AdminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function showEtudiant(string $email)
+    public function showEtudiant(string $id)
     {
-        $etudiant = Demande::where('email',$email)->get();
-        return view('admin.zoomEtudiant',['etudiant'=>$etudiant]);
+        $demandes = Demande::where('id',$id)->get();
+        $nom = "dddd";
+        return view('admin.zoomEtudiant',['demandes'=>$demandes,'nom'=>$nom]);
     }
 
     /**

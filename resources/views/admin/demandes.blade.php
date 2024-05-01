@@ -32,7 +32,7 @@
                     <td >
                         <i class="fs-5 bi bi-trash text-danger "></i>
                         <i class="fs-5 bi bi-pencil-square text-primary px-2"></i>
-                        <a href=""><i class="fs-5 bi bi-eye-fill text-primary"></i></a>
+                        <a href="{{ route('admin.etudiant.zoom',$demande->id) }}"><i class="fs-5 bi bi-eye-fill text-primary"></i></a>
                     </td>
 
                 </tr>

@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('demandes', function (Blueprint $table) {
+        Schema::create('commentaire_tuteurs', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
-            $table->string('telephone')->unique();
-            $table->string('email')->unique();
-            $table->boolean('statut')->default(false);
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('demande_id')->constrained();
+            $table->text('contenu');
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('demandes');
+        Schema::dropIfExists('commentaire_tuteurs');
     }
 };

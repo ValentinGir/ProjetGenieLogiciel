@@ -18,6 +18,7 @@ class DemandeFactory extends Factory
     public function definition(): array
     {
         return [
+            'nom' => fake()->name(),
             'telephone' => $this->faker->unique()->phoneNumber,
             'email' => $this->faker->unique()->safeEmail,
             'statut' => $this->faker->boolean(),

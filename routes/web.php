@@ -50,6 +50,7 @@ Route::middleware(['auth','isAdmin'])->prefix('admin')->group(function (){
     Route::get('/demandes', [AdminController::class,'demandes'])->name('admin.demandes');
 
     Route::get('/etudiants', [AdminController::class,'etudiants'])->name('admin.etudiants');
+    Route::get('/etudiants/{id}', [AdminController::class,'showEtudiant'])->name('admin.etudiant.zoom');
 });
 
 // fin route admin
