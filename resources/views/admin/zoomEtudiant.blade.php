@@ -28,21 +28,25 @@
 
             <div class="col-lg-6 col-md-6">
                 <h4 class="text-dark">Commentaires</h4>
-                <div class="card">
+                <div class="card"  style=" height: 77%; /* Hauteur fixe */
+        overflow-y: auto; /* Activer le défilement vertical */
+        border: 1px solid #ccc;">
+                    <div class="card-body">
                     @if(count($commentaires)>0)
                         @foreach($commentaires as $commentaire)
-
-                            <div class="card-body">
+                            <div>
                                <p>
                                    <b>{{ $commentaire->demande->user->name }}</b>
                                    <em class="text-muted">{{ $commentaire->created_at }}</em>
                                </p>
-                                {{ $commentaire->contenu }}
+                                <p>{{ $commentaire->contenu }}</p>
                             </div>
+
                         @endforeach
                     @else
                         <span>Aucun commentaires</span>
                     @endif
+                    </div>
                 </div>
             </div>
         </div>

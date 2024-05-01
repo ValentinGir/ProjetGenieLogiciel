@@ -22,7 +22,7 @@ class AdminController extends Controller
     }
 
     public function demandes(){
-        $demandes =Demande::paginate(7);
+        $demandes =Demande::paginate(9);
         return view('admin.demandes',['demandes'=>$demandes]);
     }
 
@@ -90,7 +90,7 @@ class AdminController extends Controller
 
     public function etudiants()
     {
-        $etudiants = Demande::paginate(10);
+        $etudiants = Demande::paginate(9);
         return view('admin.etudiants', ['etudiants' => $etudiants]);
     }
 
