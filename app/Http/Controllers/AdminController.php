@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\CommentaireTuteur;
 use App\Models\Demande;
 use App\Models\Domaine;
 use App\Models\Matiere;
@@ -89,7 +90,7 @@ class AdminController extends Controller
 
     public function etudiants()
     {
-        $etudiants = Demande::all();
+        $etudiants = Demande::paginate(10);
         return view('admin.etudiants', ['etudiants' => $etudiants]);
     }
 
@@ -99,8 +100,9 @@ class AdminController extends Controller
     public function showEtudiant(string $id)
     {
         $demandes = Demande::where('id',$id)->get();
+        $commentaires = CommentaireTuteur::where('demande_id',$id)->get();
         $nom = "dddd";
-        return view('admin.zoomEtudiant',['demandes'=>$demandes,'nom'=>$nom]);
+        return view('admin.zoomEtudiant',['demandes'=>$demandes,'nom'=>$nom,'commentaires'=>$commentaires]);
     }
 
     /**

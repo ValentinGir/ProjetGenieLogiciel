@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class CommentaireTuteur extends Model
 {
     use HasFactory;
+    public function demande(){
+        return $this->belongsTo(Demande::class);
+    }
 }

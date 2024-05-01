@@ -27,19 +27,23 @@
             </div>
 
             <div class="col-lg-6 col-md-6">
-                <h4></h4>
-                <table class="table table-responsive table-striped">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Nom</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                <h4 class="text-dark">Commentaires</h4>
+                <div class="card">
+                    @if(count($commentaires)>0)
+                        @foreach($commentaires as $commentaire)
 
-                    </tbody>
-                </table>
+                            <div class="card-body">
+                               <p>
+                                   <b>{{ $commentaire->demande->user->name }}</b>
+                                   <em class="text-muted">{{ $commentaire->created_at }}</em>
+                               </p>
+                                {{ $commentaire->contenu }}
+                            </div>
+                        @endforeach
+                    @else
+                        <span>Aucun commentaires</span>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
