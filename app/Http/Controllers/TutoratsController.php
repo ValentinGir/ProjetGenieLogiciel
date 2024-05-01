@@ -123,4 +123,22 @@ class TutoratsController extends Controller
         $tuteur = User::find($tuteur_id);
         return view('tutorats.contact', compact('matiere', 'tuteur'));
     }
+
+    public function demandes()
+    {
+        $demandes = Demande::where('user_id', auth()->id())
+                            ->orderBy('created_at', 'desc')
+                            ->get();
+        return view('tutorats.demandes', ['demandes' => $demandes]);
+    }
+
+    public function accepterDemande(Demande $demande)
+{
+    $demande->statut = 1;
+    $demande->save();
+
+    return redirect()->back()->with('success', 'La demande a été acceptée avec succès.');
+}
+
+    
 }

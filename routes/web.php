@@ -32,6 +32,9 @@ Route::middleware(['auth', 'isTuteur'])->group(function () {
     Route::delete('/disponibilites/{disponibilite}', [DisponibilitesController::class, 'destroy'])->name('disponibilites.destroy');
     Route::get('/disponibilites/create', [DisponibilitesController::class, 'create'])->name('disponibilites.create');
     Route::post('/disponibilites', [DisponibilitesController::class, 'store'])->name('disponibilites.store');
+    Route::get('/demandes', [TutoratsController::class, 'demandes'])->name('demandes.show');
+    Route::post('/demandes/{demande}/accepter', [TutoratsController::class, 'accepterDemande'])->name('demandes.accept');
+    Route::post('/demandes/{demande}/commenter', [TutoratsController::class, 'commenterDemande'])->name('demandes.commenter');
 });
 
 
