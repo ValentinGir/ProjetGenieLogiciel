@@ -30,6 +30,9 @@ Route::middleware(['auth', 'isTuteur'])->group(function () {
     Route::get('/demandes', [TutoratsController::class, 'demandes'])->name('demandes.show');
     Route::post('/demandes/{demande}/accepter', [TutoratsController::class, 'accepterDemande'])->name('demandes.accept');
     Route::post('/demandes/{demande}/commenter', [TutoratsController::class, 'commenterDemande'])->name('demandes.commenter');
+    Route::get('/mesmatieres', [TutoratsController::class, 'matieres'])->name('mesmatieres.show');
+    Route::delete('/supprimer-matiere/{userMatiere}', [TutoratsController::class, 'supprimerMatiere'])->name('supprimer-matiere');
+    Route::post('/lier-matiere', [TutoratsController::class, 'lierMatiere'])->name('lier-matiere');
 });
 
 

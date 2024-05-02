@@ -51,7 +51,7 @@ class User extends Authenticatable
 
     public function matieres()
     {
-        return $this->belongsToMany(Matiere::class, 'users_matieres');
+        return $this->belongsToMany(Matiere::class, 'users_matieres', 'user_id', 'matiere_id');
     }
 
     public function role(){

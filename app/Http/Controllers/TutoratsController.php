@@ -12,6 +12,7 @@ use App\Models\Disponibilite;
 use App\Models\Demande;
 use Illuminate\Http\RedirectResponse;
 use Redirect;
+use Illuminate\Support\Facades\Auth;
 
 class TutoratsController extends Controller
 {
@@ -143,5 +144,45 @@ class TutoratsController extends Controller
         return redirect()->back()->with('success', 'La demande a été acceptée avec succès.');
     }
 
+    public function matieres()
+    {
+        $user = Auth::user();
+        $mesMatieres = collect();
+        $autresMatieres = collect();
+    
+        if ($user) {
+            $mesMatieres = $user->matieres()->get();
+            $autresMatieres = Matiere::whereNotIn('id', $mesMatieres->pluck('id'))->get();
+        }
+    
+        return view('tutorats.mesmatieres', compact('mesMatieres', 'autresMatieres'));
+    }
+    
 
+    public function supprimerMatiere($userMatiereId)
+    {
+        $user = auth()->user();
+        $user->matieres()->detach($userMatiereId);
+    
+        return redirect()->back()->with('success', 'La matière a été supprimée avec succès.');
+    }
+
+    public function lierMatiere(Request $request)
+    {
+        $user = auth()->user();
+
+        $request->validate([
+            'matiere_id' => 'required|exists:matieres,id',
+        ]);
+
+        $matiereId = $request->input('matiere_id');
+
+        if ($user->matieres()->where('matieres.id', $matiereId)->exists()) {
+            return redirect()->back()->with('error', 'Vous êtes déjà associé à cette matière.');
+        }
+        
+        $user->matieres()->attach($matiereId);
+
+        return redirect()->back()->with('success', 'La matière a été liée avec succès.');
+    }
 }
