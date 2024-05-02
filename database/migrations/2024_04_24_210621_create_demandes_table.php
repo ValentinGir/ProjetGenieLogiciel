@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->boolean('statut')->default(false);
             $table->foreignId('user_id')->constrained();
+            $table->foreignId('matiere_id')->constrained();
             $table->timestamps();
         });
     }

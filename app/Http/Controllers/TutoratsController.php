@@ -52,6 +52,7 @@ class TutoratsController extends Controller
             'email' => $request->email,
             'nom' => $request->nom,
             'user_id' => $tuteur_id,
+            'matiere_id' => $matiere_id
         ]);
 
         $demande->save();
@@ -90,9 +91,10 @@ class TutoratsController extends Controller
         //
     }
 
-    public function getMatieres(Request $request){
-        if ($request->ajax()){
-            return response()->json(Matiere::where('domaine_id',$request->input('domaine_id'))->get());
+    public function getMatieres(Request $request)
+    {
+        if ($request->ajax()) {
+            return response()->json(Matiere::where('domaine_id', $request->input('domaine_id'))->get());
         }
     }
 
@@ -111,7 +113,7 @@ class TutoratsController extends Controller
                 'id' => $tuteur->id,
                 'name' => $tuteur->name,
                 'disponibilites' => $disponibilites,
-                'tuteurDomaine' =>User::where('id',$tuteur->id)->get()->first()->domaine->libelle
+                'tuteurDomaine' => User::where('id', $tuteur->id)->get()->first()->domaine->libelle
             ];
         });
 
@@ -128,18 +130,18 @@ class TutoratsController extends Controller
     public function demandes()
     {
         $demandes = Demande::where('user_id', auth()->id())
-                            ->orderBy('created_at', 'desc')
-                            ->get();
+            ->orderBy('created_at', 'desc')->orderBy('statut', 'asc')
+            ->get();
         return view('tutorats.demandes', ['demandes' => $demandes]);
     }
 
     public function accepterDemande(Demande $demande)
-{
-    $demande->statut = 1;
-    $demande->save();
+    {
+        $demande->statut = 1;
+        $demande->save();
 
-    return redirect()->back()->with('success', 'La demande a été acceptée avec succès.');
-}
+        return redirect()->back()->with('success', 'La demande a été acceptée avec succès.');
+    }
 
 
 }

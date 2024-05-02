@@ -13,6 +13,9 @@ class Demande extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function matiere(){
+        return $this->belongsTo(Matiere::class);
+    }
     public function commentaireTuteurs(){
         return $this->hasMany(CommentaireTuteur::class);
     }

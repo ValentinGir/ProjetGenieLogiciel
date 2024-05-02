@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Matiere;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,6 +24,7 @@ class DemandeFactory extends Factory
             'email' => $this->faker->unique()->safeEmail,
             'statut' => $this->faker->boolean(),
             'user_id' => User::inRandomOrder()->first()->id,
+            'matiere_id'=>Matiere::inRandomOrder()->first()->id,
             'created_at' => now(),
             'updated_at' => now(),
         ];
