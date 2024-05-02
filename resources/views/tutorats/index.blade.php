@@ -116,7 +116,7 @@
 
                 // Création du bouton "Contacter"
                 const contactButton = document.createElement('button');
-                contactButton.textContent = 'Contacter';
+                contactButton.textContent = 'Demander';
                 contactButton.classList.add('btn', 'btn-primary', 'mt-2'); // Ajout des classes Bootstrap
                 contactButton.addEventListener('click', function() {
                     window.location.href = `/contact-tuteur/${matiereId}/${tuteur.id}`;

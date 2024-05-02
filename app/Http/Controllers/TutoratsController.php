@@ -43,14 +43,14 @@ class TutoratsController extends Controller
         $request->validate([
             'telephone' => ['required', 'unique:demandes,telephone'],
             'email' => ['required', 'email', 'unique:demandes,email'],
-            'message' => ['required'],
+            'nom' => ['required']
         ]);
 
 
         $demande = new Demande([
             'telephone' => $request->telephone,
             'email' => $request->email,
-            'message' => $request->message,
+            'nom' => $request->nom,
             'user_id' => $tuteur_id,
         ]);
 
