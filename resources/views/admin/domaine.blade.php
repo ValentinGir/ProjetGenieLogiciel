@@ -58,8 +58,7 @@
                             <td>
 
                                 <i  id="{{ $domaine->id }}" class="fs-5 bi bi-trash text-danger btnDomaineMatieres"></i>
-                                <buton class="btn btn-secondary">modifier</buton>
-
+                                <i class="fs-5 bi bi-pencil-square text-primary px-2"></i>
                                 <i id="{{ $domaine->id }}" data-bs-toggle="modal" data-bs-target="#afficheMatieres" class="fs-5 bi bi-eye-fill text-primary btnAfficherMatieres"></i>
                             </td>
 

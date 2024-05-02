@@ -1,6 +1,11 @@
 @extends('admin.base')
 @section('content')
     <div class="content">
+        @if(Session::has('deleteuser'))
+            <div class="alert alert-success">
+                {{Session::get('deleteuser')}}
+            </div>
+        @endif
         <h3>Utilisateurs</h3>
         <table class="table table-striped">
             <thead>
@@ -24,8 +29,8 @@
                     <td>{{ $user->telephone }}</td>
                     <td>{{ $user->domaine->libelle }}</td>
                     <td>
-                        <button class="btn btn-danger">supprimer</button>
-                        <buton class="btn btn-secondary">modifier</buton>
+                        <i class="fs-5 bi bi-trash text-danger "></i>
+                        <i class="fs-5 bi bi-pencil-square text-primary px-2"></i>
                     </td>
                 </tr>
             @endforeach

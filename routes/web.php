@@ -7,11 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DisponibilitesController;
 
 Route::get('/',[TutoratsController::class,"index"])->name("tutorat.index");
-
-/*Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard')
-*/
+Route::get('/get-matieres',[TutoratsController::class,'getMatieres'])->name('getMatieres');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -27,7 +23,6 @@ Route::post('/contact-tuteur/{matiere_id}/{tuteur_id}/send', [TutoratsController
 
 // routes tuteur
 Route::middleware(['auth', 'isTuteur'])->group(function () {
-    Route::get('/get-matieres',[TutoratsController::class,'getMatieres'])->name('getMatieres');
     Route::get('/disponibilites/edit', [DisponibilitesController::class, 'edit'])->name('disponibilites.edit');
     Route::delete('/disponibilites/{disponibilite}', [DisponibilitesController::class, 'destroy'])->name('disponibilites.destroy');
     Route::get('/disponibilites/create', [DisponibilitesController::class, 'create'])->name('disponibilites.create');
@@ -54,6 +49,8 @@ Route::middleware(['auth','isAdmin'])->prefix('admin')->group(function (){
 
     Route::get('/etudiants', [AdminController::class,'etudiants'])->name('admin.etudiants');
     Route::get('/etudiants/{id}', [AdminController::class,'showEtudiant'])->name('admin.etudiant.zoom');
+
+    Route::delete('/users/{id}',[])->name('user.delete');
 });
 
 // fin route admin

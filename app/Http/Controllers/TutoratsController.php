@@ -22,7 +22,7 @@ class TutoratsController extends Controller
     {
         // Supposons que vous récupérez les matières de votre modèle ici
         $matieres = Matiere::all();
-        
+
         // Passer les matières à la vue
         return view('tutorats.index', ['matieres' => $matieres]);
     }
@@ -45,7 +45,7 @@ class TutoratsController extends Controller
             'email' => ['required', 'email', 'unique:demandes,email'],
             'message' => ['required'],
         ]);
-        
+
 
         $demande = new Demande([
             'telephone' => $request->telephone,
@@ -100,23 +100,24 @@ class TutoratsController extends Controller
     public function getTuteurs(Request $request, $matiere_id)
     {
         $matiere = Matiere::find($matiere_id);
-        
+
         if (!$matiere) {
             return response()->json(['error' => 'Matière non trouvée'], 404);
         }
-        
+
         $tuteurs = $matiere->users->map(function ($tuteur) {
             $disponibilites = Disponibilite::where('user_id', $tuteur->id)->get();
             return [
                 'id' => $tuteur->id,
                 'name' => $tuteur->name,
-                'disponibilites' => $disponibilites
+                'disponibilites' => $disponibilites,
+                'tuteurDomaine' =>User::where('id',$tuteur->id)->get()->first()->domaine->libelle
             ];
         });
-        
+
         return response()->json($tuteurs);
     }
-    
+
     public function showContactForm(Request $request, $matiere_id, $tuteur_id)
     {
         $matiere = Matiere::find($matiere_id);
@@ -140,5 +141,5 @@ class TutoratsController extends Controller
     return redirect()->back()->with('success', 'La demande a été acceptée avec succès.');
 }
 
-    
+
 }

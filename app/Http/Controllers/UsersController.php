@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -59,6 +60,7 @@ class UsersController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        User::where('id',$id)->delete();
+        return redirect()->back()->with(['delete_user','suppression réussie']);
     }
 }
