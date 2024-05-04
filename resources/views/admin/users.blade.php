@@ -2,17 +2,34 @@
 
 @section('content')
     <div class="content" style="margin-left: 0;"> <!-- Ajout de margin-left: 0; pour supprimer la marge -->
-        @if(Session::has('deleteuser'))
+        @if(Session::has('delete_user'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{Session::get('deleteuser')}}
+                {{Session::get('delete_user')}}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
         @endif
+        @if(Session::has('delete_user_denied'))
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{Session::get('delete_user_denied')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+        @if(Session::has('register'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{Session::get('register')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h3 class="mb-0">Utilisateurs</h3>
-            <a href="#" class="btn btn-primary">Ajouter un utilisateur</a>
+            <a href="{{ route('admin.adduser') }}" class="btn btn-primary">Ajouter un utilisateur</a>
         </div>
         <div class="table-responsive">
             <table class="table table-striped">
@@ -37,9 +54,13 @@
                         <td>{{ $user->telephone }}</td>
                         <td>{{ $user->domaine->libelle }}</td>
                         <td>
-                            <button type="button" class="btn btn-sm btn-outline-danger">
-                                <i class="bi bi-trash"></i>
-                            </button>
+                            <form action="{{ route('user.delete',$user->id) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
                             <button type="button" class="btn btn-sm btn-outline-primary">
                                 <i class="bi bi-pencil-square"></i>
                             </button>

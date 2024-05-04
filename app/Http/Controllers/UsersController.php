@@ -60,7 +60,13 @@ class UsersController extends Controller
      */
     public function destroy(string $id)
     {
-        User::where('id',$id)->delete();
-        return redirect()->back()->with(['delete_user','suppression réussie']);
+        $user = User::find($id);
+        if($user->domaine()->exists()){
+            return redirect()->back()->with(['delete_user_denied'=>'impossible de supprimer! cet utilisateur est lié a des cours']);
+        }
+        else {
+           $user->delete();
+            return redirect()->back()->with(['delete_user'=>'suppression réussie']);
+        }
     }
 }

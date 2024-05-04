@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TutoratsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DisponibilitesController;
 
@@ -40,6 +41,7 @@ Route::middleware(['auth', 'isTuteur'])->group(function () {
 // routes admin
 Route::middleware(['auth','isAdmin'])->prefix('admin')->group(function (){
     Route::get('/', [AdminController::class,'index'])->name('admin.users');
+    Route::get('/adduser', [AdminController::class,'adduser'])->name('admin.adduser');
     Route::get('/domaines', [AdminController::class,'domaines'])->name('admin.domaines');
     Route::post('/domaines/add', [AdminController::class,'storeDomaine'])->name('admin.domaines.store');
     Route::delete('/domaines/', [AdminController::class,'destroyDomaine'])->name('admin.domaines.destroy');
@@ -53,7 +55,7 @@ Route::middleware(['auth','isAdmin'])->prefix('admin')->group(function (){
     Route::get('/etudiants', [AdminController::class,'etudiants'])->name('admin.etudiants');
     Route::get('/etudiants/{id}', [AdminController::class,'showEtudiant'])->name('admin.etudiant.zoom');
 
-    Route::delete('/users/{id}',[])->name('user.delete');
+    Route::delete('/users/{id}',[UsersController::class,'destroy'])->name('user.delete');
 });
 
 // fin route admin

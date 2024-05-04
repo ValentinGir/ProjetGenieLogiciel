@@ -62,9 +62,11 @@ class RegisteredUserController extends Controller
         }
          //event(new Registered($user));
 
-         Auth::login($user);
-
-         return redirect()->route('tutorat.index')->with('register','compte créé');
-
+        if(Auth::user()){
+            return redirect()->route('admin.users')->with('register','compte créé');
+        }else{
+            Auth::login($user);
+            return redirect()->route('tutorat.index')->with('register','compte créé');
+        }
     }
 }

@@ -21,6 +21,11 @@ class AdminController extends Controller
         return view('admin.users', ['users' => $users]);
     }
 
+    public function adduser(){
+        $domaines= Domaine::all();
+        $matieres = Matiere::all();
+        return view('admin.adduser',compact('domaines','matieres'));
+    }
     public function demandes(){
         $demandes =Demande::paginate(9);
         return view('admin.demandes',['demandes'=>$demandes]);
