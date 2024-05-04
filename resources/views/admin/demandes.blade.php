@@ -1,11 +1,11 @@
 @extends('admin.base')
+
 @section('content')
     <div class="content">
         <h3>Demandes</h3>
         <table class="table table-striped">
             <thead>
             <tr>
-
                 <th scope="col">Etudiants</th>
                 <th>contacts</th>
                 <th scope="col">Tuteurs</th>
@@ -17,24 +17,22 @@
             <tbody>
             @foreach($demandes as $demande)
                 <tr>
-
-                    <td >{{ $demande->email }}</td>
+                    <td>{{ $demande->email }}</td>
                     <td>{{ $demande->telephone }}</td>
-                    <td >{{ $demande->user->surname }},{{ $demande->user->name }}</td>
+                    <td>{{ $demande->user->surname }},{{ $demande->user->name }}</td>
                     <td>{{ $demande->user->domaine->libelle }}</td>
-                    <td >
+                    <td>
                         @if($demande->statut==0)
                             <i class="fs-5 bi bi-dot text-warning"></i>
                         @else
                             <i class="fs-5 bi bi-dot text-success"></i>
                         @endif
                     </td>
-                    <td >
-                        <i class="fs-5 bi bi-trash text-danger "></i>
+                    <td>
+                        <i class="fs-5 bi bi-trash text-danger"></i>
                         <i class="fs-5 bi bi-pencil-square text-primary px-2"></i>
                         <a href="{{ route('admin.etudiant.zoom',$demande->id) }}"><i class="fs-5 bi bi-eye-fill text-primary"></i></a>
                     </td>
-
                 </tr>
             @endforeach
             </tbody>
@@ -44,4 +42,3 @@
         </div>
     </div>
 @endsection
-

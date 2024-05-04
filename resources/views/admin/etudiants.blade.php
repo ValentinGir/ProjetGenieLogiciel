@@ -3,7 +3,7 @@
     <div class="content container">
 
         <div class="row">
-            <div class="col-lg-9 col-md-9 offset-md-1 offset-lg-1">
+            <div class="col-lg-9 col-md-9">
                 <h4>Etudiants</h4>
                 <table class="table table-responsive table-striped">
                     <thead>

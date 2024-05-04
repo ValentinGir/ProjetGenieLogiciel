@@ -1,9 +1,10 @@
 @extends('admin.base')
+
 @section('content')
     <div class="content container">
 
         <div class="row">
-            <div class="col-lg-9 col-md-9 offset-md-1 offset-lg-1">
+            <div class="col-lg-9 col-md-9"> <!-- Suppression des offsets pour retirer l'espacement à gauche -->
                 @if(Session::has('storeDomaineSucces'))
                     <div class="alert alert-success">
                         {{Session::get('storeDomaineSucces')}}
@@ -129,6 +130,7 @@
     </div>
     <!--  modal de modification du domaines -->
 @endsection
+
 @section('scripts')
     <script>
         $(function () {
