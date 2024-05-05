@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('telephone')->unique();
             $table->string('email')->unique();
             $table->boolean('statut')->default(false);
+            $table->boolean('archive')->default(false);
+            $table->unsignedTinyInteger('nb_heures')->default(0);
+            $table->date('date')->nullable()->default(null);
             $table->foreignId('user_id')->constrained();
             $table->foreignId('matiere_id')->constrained();
             $table->timestamps();
@@ -31,3 +34,4 @@ return new class extends Migration
         Schema::dropIfExists('demandes');
     }
 };
+

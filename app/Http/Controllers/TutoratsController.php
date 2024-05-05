@@ -15,6 +15,7 @@ use App\Models\Demande;
 use Illuminate\Http\RedirectResponse;
 use Redirect;
 use Illuminate\Support\Facades\Auth;
+use App\Models\CommentaireTuteur;
 
 class TutoratsController extends Controller
 {
@@ -189,4 +190,33 @@ class TutoratsController extends Controller
 
         return redirect()->back()->with('success', 'La matière a été liée avec succès.');
     }
+
+    public function commenterDemande(Request $request, Demande $demande)
+    {
+        $request->validate([
+            'commentaire' => 'required|string',
+        ]);
+        $commentaire = new CommentaireTuteur();
+        $commentaire->demande_id = $demande->id;
+        $commentaire->contenu = $request->input('commentaire');
+        $commentaire->save();
+
+        return redirect()->back()->with('success', 'Le commentaire a été ajouté avec succès.');
+    }
+
+    public function archiverDemande(Demande $demande, Request $request)
+    {
+        $request->validate([
+            'nb_heures' => 'required|integer|between:1,4',
+            'date' => 'required|date',
+        ]);
+    
+        $demande->archive = true;
+        $demande->nb_heures = $request->nb_heures;
+        $demande->date = $request->date;
+        $demande->save();
+        
+        return redirect()->back()->with('success', 'La demande a été archivée avec succès.');
+    }
+    
 }

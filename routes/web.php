@@ -34,6 +34,8 @@ Route::middleware(['auth', 'isTuteur'])->group(function () {
     Route::get('/mesmatieres', [TutoratsController::class, 'matieres'])->name('mesmatieres.show');
     Route::delete('/supprimer-matiere/{userMatiere}', [TutoratsController::class, 'supprimerMatiere'])->name('supprimer-matiere');
     Route::post('/lier-matiere', [TutoratsController::class, 'lierMatiere'])->name('lier-matiere');
+    Route::post('/demandes/{demande}/archiver', [TutoratsController::class, 'archiverDemande'])->name('demandes.archiver');
+
 });
 
 
