@@ -40,7 +40,7 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center mt-4">
+        <div class="row justify-content-center mt-4 mb-2">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header bg-primary text-white">
@@ -58,7 +58,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">Lier</button>
+                            <button type="submit" class="btn btn-primary btn-block mt-2">Lier</button>
                         </form>
                     </div>
                 </div>
