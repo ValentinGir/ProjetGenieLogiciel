@@ -1,7 +1,7 @@
 @extends('admin.base')
 
 @section('content')
-    <div class="content container">
+    <div class="content container m-0">
 
         <div class="row">
             <div class="col-lg-9 col-md-9"> <!-- Suppression des offsets pour retirer l'espacement à gauche -->

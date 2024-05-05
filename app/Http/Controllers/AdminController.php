@@ -26,9 +26,15 @@ class AdminController extends Controller
         $matieres = Matiere::all();
         return view('admin.adduser',compact('domaines','matieres'));
     }
-    public function demandes(){
+    public function demandes(Request $request){
         $demandes =Demande::paginate(9);
-        return view('admin.demandes',['demandes'=>$demandes]);
+        if($request->has('statut')){
+            if($request->input('statut')==1 || $request->input('statut')==0){
+                $demandes = Demande::where('statut',$request->input('statut'))->paginate(9);
+            }
+        }
+
+        return view('admin.demandes',['demandes'=>$demandes,'domaines'=>Domaine::all()]);
     }
 
     public function domaines()

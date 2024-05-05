@@ -1,8 +1,27 @@
 @extends('admin.base')
 
 @section('content')
-    <div class="content">
+    <div class="content container m-0">
         <h3>Demandes</h3>
+        <!-- Formulaire de filtre -->
+        <form method="GET" class="mb-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-4">
+                    <label for="statut" class="col-form-label">Statut :</label>
+                    <select name="statut" id="statut" class="form-select">
+                        <option value="3">Tous</option>
+                        <option value="0">En attente</option>
+                        <option value="1">Validé</option>
+                    </select>
+                </div>
+                <div class="col-md-2 align-self-end">
+                    <button type="submit" class="btn btn-primary">Filtrer</button>
+                </div>
+            </div>
+        </form>
+
+
+
         <table class="table table-striped">
             <thead>
             <tr>
@@ -16,7 +35,7 @@
             </thead>
             <tbody>
             @foreach($demandes as $demande)
-                <tr>
+                <tr class="{{ $demande->statut==0 ? 'fw-bold':'' }}">
                     <td>{{ $demande->email }}</td>
                     <td>{{ $demande->telephone }}</td>
                     <td>{{ $demande->user->surname }},{{ $demande->user->name }}</td>
@@ -30,7 +49,11 @@
                     </td>
                     <td>
                         <i class="fs-5 bi bi-trash text-danger"></i>
-                        <i class="fs-5 bi bi-pencil-square text-primary px-2"></i>
+                        @if($demande->statut==0)
+                            <i class="fs-5 bi bi bi-check2 text-success px-2"></i>
+                        @else
+                            <i class="fs-5 bi bi-file-excel text-danger px-2"></i>
+                        @endif
                         <a href="{{ route('admin.etudiant.zoom',$demande->id) }}"><i class="fs-5 bi bi-eye-fill text-primary"></i></a>
                     </td>
                 </tr>

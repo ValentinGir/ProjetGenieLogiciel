@@ -1,7 +1,7 @@
 @extends('admin.base')
 
 @section('content')
-    <div class="content">
+    <div class="content container m-0">
         <h2 class="mb-4 text-center">Créer un utilisateur</h2>
         <div class="row justify-content-center">
             <div class="col-lg-8 col-xl-9">
