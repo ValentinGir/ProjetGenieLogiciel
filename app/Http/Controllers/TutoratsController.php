@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ReponseDemande;
 use App\Models\Matiere;
 use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use App\Models\User;
 use App\Models\Tuteur;
@@ -141,6 +143,8 @@ class TutoratsController extends Controller
         $demande->statut = 1;
         $demande->save();
 
+        Mail::to($demande->email)->send(new ReponseDemande($demande));
+
         return redirect()->back()->with('success', 'La demande a été acceptée avec succès.');
     }
 
@@ -149,21 +153,21 @@ class TutoratsController extends Controller
         $user = Auth::user();
         $mesMatieres = collect();
         $autresMatieres = collect();
-    
+
         if ($user) {
             $mesMatieres = $user->matieres()->get();
             $autresMatieres = Matiere::whereNotIn('id', $mesMatieres->pluck('id'))->get();
         }
-    
+
         return view('tutorats.mesmatieres', compact('mesMatieres', 'autresMatieres'));
     }
-    
+
 
     public function supprimerMatiere($userMatiereId)
     {
         $user = auth()->user();
         $user->matieres()->detach($userMatiereId);
-    
+
         return redirect()->back()->with('success', 'La matière a été supprimée avec succès.');
     }
 
@@ -180,7 +184,7 @@ class TutoratsController extends Controller
         if ($user->matieres()->where('matieres.id', $matiereId)->exists()) {
             return redirect()->back()->with('error', 'Vous êtes déjà associé à cette matière.');
         }
-        
+
         $user->matieres()->attach($matiereId);
 
         return redirect()->back()->with('success', 'La matière a été liée avec succès.');

@@ -47,10 +47,10 @@
                             <i class="fs-5 bi bi-dot text-success"></i>
                         @endif
                     </td>
-                    <td>
+                    <td class="inline-flex">
                         <i class="fs-5 bi bi-trash text-danger"></i>
                         @if($demande->statut==0)
-                            <i class="fs-5 bi bi bi-check2 text-success px-2"></i>
+                            <i type="submit" class="fs-5 bi bi bi-check2 text-success px-2"></i>
                         @else
                             <i class="fs-5 bi bi-file-excel text-danger px-2"></i>
                         @endif
