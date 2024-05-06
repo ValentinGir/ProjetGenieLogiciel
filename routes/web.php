@@ -52,6 +52,10 @@ Route::middleware(['auth','isAdmin'])->prefix('admin')->group(function (){
     Route::delete('/domaines/', [AdminController::class,'destroyDomaine'])->name('admin.domaines.destroy');
     Route::get('/domaines/matieres/', [AdminController::class,'getMatieresDomaine'])->name('admin.domaines.matieres');
 
+    Route::get('/edituser/{id}', [AdminController::class, 'edituser'])->name('admin.edituser');
+    Route::put('/user/{id}', [AdminController::class, 'update'])->name('user.update');
+    Route::get('/get-matieres-by-domaine', [AdminController::class, 'getMatieresByDomaine'])->name('getMatieresByDomaine');
+
     Route::post('/matieres/add', [AdminController::class,'storeMatiere'])->name('admin.matieres.store');
     Route::delete('/domaines/{id}', [AdminController::class,'destroyMatiere'])->name('admin.matieres.destroy');
 
