@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TutoratsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DisponibilitesController;
 
@@ -21,6 +22,8 @@ Route::get('/get-tuteurs/{matiere_id}', [TutoratsController::class, 'getTuteurs'
 Route::get('/contact-tuteur/{matiere_id}/{tuteur_id}', [TutoratsController::class, 'contactTuteur'])->name('contact-tuteur');
 Route::get('/contact-tuteur/{matiere_id}/{tuteur_id}', [TutoratsController::class, 'showContactForm'])->name('contact-tuteur.show');
 Route::post('/contact-tuteur/{matiere_id}/{tuteur_id}/send', [TutoratsController::class, 'storeDemande'])->name('contact-tuteur.send');
+Route::get('/nous-contacter', [ContactController::class, 'nousContacter'])->name('nous-contacter.show');
+Route::post('/nous-contacter', [ContactController::class, 'store'])->name('contact.store');
 
 // routes tuteur
 Route::middleware(['auth', 'isTuteur'])->group(function () {

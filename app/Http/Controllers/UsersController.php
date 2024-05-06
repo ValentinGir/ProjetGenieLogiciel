@@ -69,4 +69,6 @@ class UsersController extends Controller
             return redirect()->back()->with(['delete_user'=>'suppression réussie']);
         }
     }
+
+
 }
