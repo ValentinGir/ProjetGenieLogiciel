@@ -148,17 +148,52 @@ class AdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edituser($id)
     {
-        //
+        $domaines= Domaine::all();
+        $matieres = Matiere::all();
+        $user = User::findOrFail($id);
+        return view('admin.edituser', compact('user','domaines','matieres'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'surname' => 'required|string',
+            'email' => 'required|email|unique:users,email,'.$id,
+            'telephone' => 'required|string',
+            'domaine' => 'required|exists:domaines,id',
+            'matieres' => 'required|array|min:1',
+            'password' => 'nullable|string|min:8',
+        ]);
+        
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->surname = $request->surname;
+        $user->email = $request->email;
+        $user->telephone = $request->telephone;
+        $user->domaine_id = $request->domaine;
+        $user->matieres()->sync($request->matieres);
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+        }
+        $user->save();
+        
+        return redirect()->route('admin.users')->with('success', 'Utilisateur mis à jour avec succès.');
+
+        
+    }
+
+    public function getMatieresByDomaine(Request $request)
+    {
+        $domaine_id = $request->input('domaine_id');
+
+        $matieres = Matiere::where('domaine_id', $domaine_id)->get();
+        return response()->json($matieres);
     }
 
 }
