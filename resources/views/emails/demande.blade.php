@@ -13,11 +13,11 @@
         <div class="col-md-8 offset-md-2">
             <h2 class="mt-4">Reponse a votre demande de tutotat</h2>
             <p>Bonjour,</p>
-
-            <p>{{ $demande->user->name }} {{ $demande->user->surname }} a accepté votre demande de tutorat..</p>
-
-            <img src="https://votresite.com/chemin/vers/votre/image.jpg" alt="Votre image" class="img-fluid">
-
+            @if($statut==1)
+                <p>{{ $demande->user->name }} {{ $demande->user->surname }} a accepté votre demande de tutorat..</p>
+            @else
+                <p>{{ $demande->user->name }} {{ $demande->user->surname }} a supprimé votre demande de tutorat..</p>
+            @endif
 
             <p>Si vous avez des questions, n'hésitez pas à nous contacter.</p>
 

@@ -90,12 +90,12 @@
             <h3>Admin</h3>
         </div>
         <ul>
-            <li><a href="#"><i class="bi bi-house-door"></i> Accueil</a></li>
+            <li><a href="{{ route('admin.users') }}"><i class="bi bi-house-door"></i> Accueil</a></li>
             <li><a href="{{ route('admin.users') }}"><i class="bi bi-people"></i> Utilisateurs</a></li>
             <li><a href="{{ route('admin.domaines') }}"><i class="bi bi-journal"></i> Domaines</a></li>
             <li><a href="{{ route('admin.demandes') }}"><i class="bi bi-calendar-check"></i> Matchs</a></li>
             <li><a href="{{ route('admin.etudiants') }}"><i class="bi bi-person"></i> Étudiants</a></li>
-            <li><a href="#"><i class="bi bi-envelope"></i> Contact</a></li>
+            <li><a href="{{  route('admin.message') }}"><i class="bi bi-envelope"></i> Contact</a></li>
         </ul>
     </div>
 

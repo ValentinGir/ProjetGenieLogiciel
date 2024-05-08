@@ -15,12 +15,14 @@ class ReponseDemande extends Mailable
 {
     use Queueable, SerializesModels;
     public Demande $demande;
+    public int $statut;
     /**
      * Create a new message instance.
      */
-    public function __construct($demande)
+    public function __construct($demande,$statut)
     {
         $this->demande = $demande;
+        $this->statut = $statut;
     }
 
     /**

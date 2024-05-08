@@ -144,7 +144,7 @@ class TutoratsController extends Controller
         $demande->statut = 1;
         $demande->save();
 
-        Mail::to($demande->email)->send(new ReponseDemande($demande));
+        Mail::to($demande->email)->send(new ReponseDemande($demande,1));
 
         return redirect()->back()->with('success', 'La demande a été acceptée avec succès.');
     }
@@ -210,13 +210,13 @@ class TutoratsController extends Controller
             'nb_heures' => 'required|integer|between:1,4',
             'date' => 'required|date',
         ]);
-    
+
         $demande->archive = true;
         $demande->nb_heures = $request->nb_heures;
         $demande->date = $request->date;
         $demande->save();
-        
+
         return redirect()->back()->with('success', 'La demande a été archivée avec succès.');
     }
-    
+
 }

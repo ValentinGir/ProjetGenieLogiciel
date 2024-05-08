@@ -2,6 +2,16 @@
 
 @section('content')
     <div class="content container m-0">
+        @if(Session::has('success_demande'))
+            <div class="alert alert-success">
+                {{Session::get('success_demande')}}
+            </div>
+        @endif
+            @if(Session::has('success_delete_demande'))
+                <div class="alert alert-success">
+                    {{Session::get('success_delete_demande')}}
+                </div>
+            @endif
         <h3>Demandes</h3>
         <!-- Formulaire de filtre -->
         <form method="GET" class="mb-3">
@@ -19,8 +29,6 @@
                 </div>
             </div>
         </form>
-
-
 
         <table class="table table-striped">
             <thead>
@@ -50,9 +58,9 @@
                     <td class="inline-flex">
                         <i class="fs-5 bi bi-trash text-danger"></i>
                         @if($demande->statut==0)
-                            <i type="submit" class="fs-5 bi bi bi-check2 text-success px-2"></i>
+                            <a href="{{ route('admin.demandes.accept',$demande->id) }}"><i class="fs-5 bi bi bi-check2 text-success px-2"></i></a>
                         @else
-                            <i class="fs-5 bi bi-file-excel text-danger px-2"></i>
+                            <a href="{{ route('admin.demandes.delete',$demande->id) }}">  <i class="fs-5 bi bi-file-excel text-danger px-2"></i></a>
                         @endif
                         <a href="{{ route('admin.etudiant.zoom',$demande->id) }}"><i class="fs-5 bi bi-eye-fill text-primary"></i></a>
                     </td>

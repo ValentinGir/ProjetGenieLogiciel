@@ -56,11 +56,15 @@ Route::middleware(['auth','isAdmin'])->prefix('admin')->group(function (){
     Route::delete('/domaines/{id}', [AdminController::class,'destroyMatiere'])->name('admin.matieres.destroy');
 
     Route::get('/demandes', [AdminController::class,'demandes'])->name('admin.demandes');
+    Route::get('/demandes/accepter/{demande}', [AdminController::class, 'accepterDemande'])->name('admin.demandes.accept');
+    Route::get('/demandes/supprimer/{demande}', [AdminController::class, 'supprimerDemande'])->name('admin.demandes.delete');
 
     Route::get('/etudiants', [AdminController::class,'etudiants'])->name('admin.etudiants');
     Route::get('/etudiants/{id}', [AdminController::class,'showEtudiant'])->name('admin.etudiant.zoom');
 
     Route::delete('/users/{id}',[UsersController::class,'destroy'])->name('user.delete');
+
+    Route::get('/messages', [AdminController::class,'messages'])->name('admin.message');
 });
 
 // fin route admin

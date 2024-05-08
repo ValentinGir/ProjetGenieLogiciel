@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             MatiereSeeder::class,
             UsersSeeder::class,
             DisponibilitesSeeder::class,
-            DemandeSeeder::class
+            DemandeSeeder::class,
+            MessageSeeder::class,
         ]);
     }
 }

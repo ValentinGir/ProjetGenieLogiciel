@@ -3,8 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Demande;
-use Database\Factories\DemandeFactory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
 
 class DemandeSeeder extends Seeder

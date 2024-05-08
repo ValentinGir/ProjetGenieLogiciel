@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ReponseDemande;
 use App\Models\CommentaireTuteur;
 use App\Models\Demande;
 use App\Models\Domaine;
 use App\Models\Matiere;
+use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
@@ -116,6 +119,32 @@ class AdminController extends Controller
         return view('admin.zoomEtudiant',['demandes'=>$demandes,'nom'=>$nom,'commentaires'=>$commentaires]);
     }
 
+    public function messages(){
+        $messages = Message::paginate(7);
+        return view('admin.message',['messages'=>$messages]);
+    }
+
+    public function accepterDemande($id)
+    {
+        $demande = Demande::find($id);
+
+        $demande->delete();
+
+        Mail::to($demande->email)->send(new ReponseDemande($demande,1));
+
+        return redirect()->back()->with('success_demande', 'La demande a été acceptée avec succès.');
+    }
+
+    public function supprimerDemande($id)
+    {
+        $demande = Demande::find($id);
+        $demande->statut = 1;
+        $demande->save();
+
+        Mail::to($demande->email)->send(new ReponseDemande($demande,0));
+
+        return redirect()->back()->with('success_delete_demande', 'La demande a été acceptée avec succès.');
+    }
     /**
      * Show the form for editing the specified resource.
      */
