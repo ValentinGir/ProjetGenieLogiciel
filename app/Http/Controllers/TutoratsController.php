@@ -38,7 +38,7 @@ class TutoratsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        #return View('films.zoomFilm', compact('film'));
     }
 
     /**
@@ -54,9 +54,9 @@ class TutoratsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+               
     }
-
+    
     /**
      * Remove the specified resource from storage.
      */
