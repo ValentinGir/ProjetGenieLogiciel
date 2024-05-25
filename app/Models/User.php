@@ -49,8 +49,9 @@ class User extends Authenticatable
         return $this->belongsTo(Domaine::class);
     }
 
-    public function matieres(){
-        return $this->belongsToMany(Matiere::class);
+    public function matieres()
+    {
+        return $this->belongsToMany(Matiere::class, 'users_matieres', 'user_id', 'matiere_id');
     }
 
     public function role(){
@@ -60,5 +61,9 @@ class User extends Authenticatable
     public function disponibilites()
     {
         return $this->hasMany(Disponibilite::class);
+    }
+
+    public function demandes(){
+        return $this->hasMany(Demande::class);
     }
 }

@@ -55,7 +55,11 @@
                                     connecter
                                 </button>
                             </div>
+                            <div>
+                                <a href="{{ route('password.request') }}">Mot de passe oublié?</a>
+                            </div>
                         </form>
+
                     </div>
                 </div>
             </div>
